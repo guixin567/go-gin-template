@@ -22,12 +22,21 @@ func Init() (err error) {
 type AppConfig struct {
 	*App   `mapstructure:"app"`
 	*Redis `mapstructure:"redis"`
+	*MySql `mapstructure:"mysql"`
 }
 
 type App struct {
 	Host string `mapstructure:"host"`
 	Port string `mapstructure:"port"`
 	Mode string `mapstructure:"mode"`
+}
+
+type MySql struct {
+	Host     string `mapstructure:"host"`
+	Port     string `mapstructure:"port"`
+	Username string `mapstructure:"username"`
+	Password string `mapstructure:"password"`
+	DBName   int    `mapstructure:"dbname"`
 }
 
 type Redis struct {

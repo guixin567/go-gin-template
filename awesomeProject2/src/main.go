@@ -13,10 +13,6 @@ import (
 
 func main() {
 
-	//mysql redis 数据库关闭
-	defer mysql.Xdb.Close()
-	defer redis.Rdb.Close()
-
 	//1 初始化配置
 	if err := config.Init(); err != nil {
 		fmt.Println("config error", err)
@@ -32,17 +28,19 @@ func main() {
 	if err := mysql.Init(); err != nil {
 		log.ALog.Error("mysql init error", zap.Error(err))
 	}
+	defer mysql.Xdb.Close()
 
 	//4 初始化redis
 	if err := redis.Init(); err != nil {
 		log.ALog.Error("redis init error", zap.Error(err))
 	}
+	defer redis.Rdb.Close()
 
 	//5 初始化路由
 	app := router.Register(test.Router)
 
 	//6 开启服务
-	if err := app.Run(":8081"); err != nil {
+	if err := app.Run(fmt.Sprintf(":s%", config.GlobalConfig.App.Port)); err != nil {
 		log.ALog.Error("router init error", zap.Error(err))
 	}
 }
