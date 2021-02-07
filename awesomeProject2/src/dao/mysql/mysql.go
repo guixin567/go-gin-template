@@ -16,6 +16,5 @@ func Init() (err error) {
 	}
 	Xdb.SetMaxOpenConns(10)
 	Xdb.SetMaxIdleConns(20)
-	defer Xdb.Close()
 	return
 }

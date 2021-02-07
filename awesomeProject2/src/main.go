@@ -12,6 +12,11 @@ import (
 )
 
 func main() {
+
+	//mysql redis 数据库关闭
+	defer mysql.Xdb.Close()
+	defer redis.Rdb.Close()
+
 	//1 初始化配置
 	if err := config.Init(); err != nil {
 		fmt.Println("config error", err)
